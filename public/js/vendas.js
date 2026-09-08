@@ -1,0 +1,2 @@
+const vendas = [{ item: "Caderno universitário", client: "Ana Souza", total: "R$ 24,90", date: "08/09/2026" }, { item: "Caneta marca-texto", client: "Bruno Lima", total: "R$ 8,50", date: "08/09/2026" }];
+document.addEventListener("DOMContentLoaded", () => { const body = document.querySelector("#data-rows"); if (body) body.innerHTML = vendas.map((item) => `<tr><td><strong>${item.item}</strong></td><td>${item.client}</td><td>${item.total}</td><td>${item.date}</td></tr>`).join(""); });

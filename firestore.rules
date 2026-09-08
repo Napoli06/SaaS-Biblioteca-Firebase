@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function staffExists() { return signedIn() && exists(/databases/$(database)/documents/staff/$(request.auth.uid)); }
+    function staffProfile() { return get(/databases/$(database)/documents/staff/$(request.auth.uid)); }
+    function role(name) { return staffExists() && staffProfile().data.role == name; }
+    function sameLibrary(libraryId) { return staffExists() && staffProfile().data.libraryId == libraryId; }
+    function staff() { return role("admin") || role("receptionist") || role("librarian") || role("cashier") || role("computer_manager"); }
+
+    match /staff/{staffUid} {
+      allow read: if signedIn() && (request.auth.uid == staffUid || role("admin"));
+      allow create, update: if role("admin") && sameLibrary(request.resource.data.libraryId);
+      allow delete: if role("admin");
+    }
+
+    match /members/{memberId} {
+      allow read: if staff() && sameLibrary(resource.data.libraryId);
+      allow create: if (role("admin") || role("receptionist")) && sameLibrary(request.resource.data.libraryId);
+      allow update: if (role("admin") || role("receptionist")) && sameLibrary(resource.data.libraryId) && sameLibrary(request.resource.data.libraryId);
+      allow delete: if role("admin") && sameLibrary(resource.data.libraryId);
+    }
+
+    match /books/{bookId} {
+      allow read: if staff() && sameLibrary(resource.data.libraryId);
+      allow create: if (role("admin") || role("librarian")) && sameLibrary(request.resource.data.libraryId);
+      allow update: if (role("admin") || role("librarian")) && sameLibrary(resource.data.libraryId) && sameLibrary(request.resource.data.libraryId);
+      allow delete: if role("admin") && sameLibrary(resource.data.libraryId);
+    }
+
+    match /bookCopies/{copyId} {
+      allow read: if staff() && sameLibrary(resource.data.libraryId);
+      allow write: if (role("admin") || role("librarian")) && sameLibrary(request.resource.data.libraryId);
+    }
+
+    match /computers/{computerId} {
+      allow read: if staff() && sameLibrary(resource.data.libraryId);
+      allow write: if (role("admin") || role("computer_manager")) && sameLibrary(request.resource.data.libraryId);
+    }
+
+    match /computerBookings/{bookingId} {
+      allow read: if staff() && sameLibrary(resource.data.libraryId);
+      allow write: if (role("admin") || role("computer_manager")) && sameLibrary(request.resource.data.libraryId);
+    }
+
+    match /computerSessions/{sessionId} {
+      allow read: if staff() && sameLibrary(resource.data.libraryId);
+      allow write: if (role("admin") || role("computer_manager")) && sameLibrary(request.resource.data.libraryId);
+    }
+
+    match /rentals/{rentalId} {
+      allow read: if staff() && sameLibrary(resource.data.libraryId);
+      allow write: if (role("admin") || role("librarian")) && sameLibrary(request.resource.data.libraryId);
+    }
+
+    match /sales/{saleId} {
+      allow read: if (role("admin") || role("cashier")) && sameLibrary(resource.data.libraryId);
+      allow create: if (role("admin") || role("cashier")) && sameLibrary(request.resource.data.libraryId);
+    }
+
+    match /turnstileEvents/{eventId} {
+      allow read: if (role("admin") || role("receptionist")) && sameLibrary(resource.data.libraryId);
+      allow write: if false;
+    }
+
+    match /visits/{visitId} {
+      allow read: if (role("admin") || role("receptionist")) && sameLibrary(resource.data.libraryId);
+      allow write: if false;
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}
