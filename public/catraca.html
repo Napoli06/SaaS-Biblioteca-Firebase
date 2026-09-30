@@ -1,1 +1,68 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Catraca | Biblioteca SaaS</title><link rel="stylesheet" href="css/style.css"></head><body><div class="app"><aside class="sidebar"><a class="brand" href="dashboard.html">biblioteca<span>.</span></a><nav class="nav"><a href="dashboard.html">Visão geral</a><a href="livros.html">Livros</a><a href="usuarios.html">Usuários</a><a href="funcionarios.html">Funcionários</a><a href="computadores.html">Computadores</a><a href="vendas.html">Vendas</a><a href="alugueis.html">Aluguéis</a><a href="recepcao.html">Recepção</a><a class="active" href="catraca.html">Catraca</a></nav><div class="sidebar-footer">Unidade Central<br><button class="btn ghost" data-logout style="margin-top:12px;color:#d7ed72;border-color:#52745c">Sair</button></div></aside><main class="main"><header class="topbar"><div><div class="eyebrow">Acesso</div><h1>Catraca</h1><p class="subtitle">Registre entradas e saídas com horário e código do membro.</p></div></header><section class="card"><h2>Registrar passagem</h2><div class="form"><div class="field"><label for="access-user">Código do membro</label><input id="access-user" placeholder="LEITOR-000123"></div><div class="actions" style="justify-content:flex-start"><button id="entry-button" class="btn secondary" type="button">Registrar entrada</button><button id="exit-button" class="btn ghost" type="button">Registrar saída</button></div><div id="access-message" class="stat-note"></div></div></section><section class="card" style="margin-top:18px"><h2>Últimos acessos</h2><div class="table-wrap"><table><thead><tr><th>Horário</th><th>Membro</th><th>Tipo</th></tr></thead><tbody id="access-rows"></tbody></table></div></section></main></div><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script><script src="js/firebase.js"></script><script src="js/library.js"></script><script src="js/auth.js"></script><script src="js/catraca.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Catraca | Biblioteca SaaS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar"><a class="brand" href="dashboard.html">Saas Biblioteca<span>.</span></a>
+            <nav class="nav"><a href="dashboard.html">Visão geral</a><a href="livros.html">Livros</a><a
+                    href="usuarios.html">Usuários</a><a href="funcionarios.html">Funcionários</a><a
+                    href="computadores.html">Computadores</a><a href="vendas.html">Vendas</a><a
+                    href="alugueis.html">Aluguéis</a><a href="recepcao.html">Recepção</a><a class="active"
+                    href="catraca.html">Catraca</a></nav>
+            <div class="sidebar-footer">Unidade Central<br><button class="btn ghost" data-logout
+                    style="margin-top:12px;color:#d7ed72;border-color:#52745c">Sair</button></div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <div class="eyebrow">Acesso</div>
+                    <h1>Catraca</h1>
+                    <p class="subtitle">Registre entradas e saídas com horário e código do membro.</p>
+                </div>
+            </header>
+            <section class="card">
+                <h2>Registrar passagem</h2>
+                <div class="form">
+                    <div class="field"><label for="access-user">Código do membro</label><input id="access-user"
+                            placeholder="LEITOR-000123"></div>
+                    <div class="actions" style="justify-content:flex-start"><button id="entry-button"
+                            class="btn secondary" type="button">Registrar entrada</button><button id="exit-button"
+                            class="btn ghost" type="button">Registrar saída</button></div>
+                    <div id="access-message" class="stat-note"></div>
+                </div>
+            </section>
+            <section class="card" style="margin-top:18px">
+                <h2>Últimos acessos</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Horário</th>
+                                <th>Membro</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="access-rows"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/library.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/catraca.js"></script>
+</body>
+
+</html>
